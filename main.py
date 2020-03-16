@@ -3,12 +3,14 @@ import numpy as np
 from random import random
 from math import log
 
-
 def next_exp(lmbda):
     U = random()
     lmbda = 1/lmbda
     return -log(1.0 - U)/lmbda
 
+def daytime(minutes):
+        time = divmod(minutes, 60)
+        return "%02d:%02d"%((time[0] + 8, time[1]))
 
 class HC_Simulation():
 
@@ -29,13 +31,14 @@ class HC_Simulation():
     def start(self, total_time):
         # Cliente -----------> (Tiempo de llegada, Tipo de servicio, No. Cliente, En Espera)
         self.clients_queue.append( (next_exp(20), self.serv_clients.rvs(), 1, False))
-        self.report[0] += 1
+
+        print()
 
         for time in range(total_time):
             self.time = time
             # 480min = 8horas Jornada Laboral
             if self.clients_queue[-1][0] <= time and time < 480:
-                print(f"{self.time}min -> LLegada de cliente {self.clients_queue[-1][2]}")
+                print(f"{ daytime(self.time) } -> Cliente {self.clients_queue[-1][2]} llega al taller.")
                 self.report[0] += 1
 
                 # Tiempo para la llegada del sigiente cliente
@@ -68,19 +71,19 @@ class HC_Simulation():
 
                 actual = (time_to_finish, self.sellers_queue[i][1], self.sellers_queue[i][2], True)
 
-                print(f"{self.time}min -> Cliente {actual[2]} siendo atendido por vendedor. {self.sellers, self.engineers, self.engineers_exp}")
+                print(f"{ daytime(self.time) } -> Cliente {actual[2]} siendo atendido por vendedor. ")
                 # normal(5,2) -> tiempo que demora un vendedor en atender a un cliente
                 self.sellers_queue[i] = actual
 
                 # el cliente va a comprar, lo atiende el vendedor
                 if self.sellers_queue[i][1] == 4:
-                    print(f"Cliente {self.sellers_queue[i][2]} comprando equipo.")
+                    print(f"\t Cliente {self.sellers_queue[i][2]} comprando equipo.")
                     self.report[4] += 1
                     self.gain += 750  # realizando servicio de venta de equipos
 
             else:
                 if self.sellers_queue[i][0] <= self.time and self.sellers_queue[i][3]:
-                    print(f"{self.time}min -> Cliente {self.sellers_queue[i][2]} fue atendido por vendedor. {self.sellers + 1, self.engineers, self.engineers_exp}")
+                    print(f"{ daytime(self.time) } -> Cliente {self.sellers_queue[i][2]} fue atendido por vendedor.")
 
                     actual = (self.sellers_queue[i][0], self.sellers_queue[i][1], self.sellers_queue[i][2], False)
 
@@ -113,21 +116,21 @@ class HC_Simulation():
                 self.engineers -= 1
                 actual = self.engineers_queue[i]
 
-                print(f"{self.time}min -> Cliente {self.engineers_queue[i][2]} siendo atendido por tecnico. {self.sellers, self.engineers, self.engineers_exp}")
+                print(f"{ daytime(self.time) } -> Cliente {self.engineers_queue[i][2]} siendo atendido por tecnico. ")
 
                 # exp(20) -> tiempo que demora un especialista en atender a un cliente
                 self.engineers_queue[i] = (actual[0] + next_exp(20), actual[1], actual[2], True)
                 if actual[1] == 1:
-                    print(f"Cliente {self.engineers_queue[i][2]} reparacion con garantia por tecnico.")
+                    print(f"\t Cliente {self.engineers_queue[i][2]} reparacion con garantia por tecnico.")
                     self.report[1] += 1
                 elif actual[1] == 2:
-                    print(f"Cliente {self.engineers_queue[i][2]} reparacion sin garantia por tecnico.")
+                    print(f"\t Cliente {self.engineers_queue[i][2]} reparacion sin garantia por tecnico.")
                     self.report[2] += 1
                     self.gain += 350  # realizando servicio de reparacion sin garantia
 
             else:
                 if self.engineers_queue[i][0] <= self.time and self.engineers_queue[i][3]:
-                    print(f"{self.time}min -> Cliente {self.engineers_queue[i][2]} fue atendido por tecnico. {self.sellers, self.engineers + 1, self.engineers_exp}")
+                    print(f"{ daytime(self.time) } -> Cliente {self.engineers_queue[i][2]} fue atendido por tecnico.")
                     self.engineers_queue.remove(self.engineers_queue[i])
                     self.engineers += 1
                     i -= 1
@@ -144,32 +147,32 @@ class HC_Simulation():
                 self.engineers_exp -= 1
                 actual = self.engineers_exp_queue[i]
 
-                print(f"{self.time}min -> Cliente {self.engineers_exp_queue[i][2]} siendo atendido por tecnico especialista. {self.sellers, self.engineers, self.engineers_exp}")
+                print(f"{ daytime(self.time) } -> Cliente {self.engineers_exp_queue[i][2]} siendo atendido por tecnico especialista. ")
 
                 if actual[1] == 1:
                     # exp(20) -> tiempo que demora un especialista en atender a un cliente
                     self.engineers_exp_queue[i] = (actual[0] + next_exp(20), actual[1], actual[2], True)
-                    print(f"Cliente {self.engineers_exp_queue[i][2]} reparacion con garantia por tecnico especialista.")
+                    print(f"\t Cliente {self.engineers_exp_queue[i][2]} reparacion con garantia por tecnico especialista.")
                     self.report[1] += 1
 
                 elif actual[1] == 2:
                     # exp(20) -> tiempo que demora un especialista en atender a un cliente
                     self.engineers_exp_queue[i] = (actual[0] + next_exp(20), actual[1], actual[2], True)
-                    print(f"Cliente {self.engineers_exp_queue[i][2]} reparacion sin garantia por tecnico especialista.")
+                    print(f"\t Cliente {self.engineers_exp_queue[i][2]} reparacion sin garantia por tecnico especialista.")
                     self.report[2] += 1
 
                     self.gain += 350  # realizando servicio de reparacion sin garantia
                 elif actual[1] == 3:
                     # exp(15) -> tiempo que demora un especialista especializado en realizar cambio de equipos
                     self.engineers_exp_queue[i] = (actual[0] + next_exp(15), actual[1], actual[2], True)
-                    print(f"Cliente {self.engineers_exp_queue[i][2]} cambio de equipos.")
+                    print(f"\t Cliente {self.engineers_exp_queue[i][2]} cambio de equipos.")
                     self.report[3] += 1
 
                     self.gain += 500  # realizando servicio de cambio de equipo
 
             else:
                 if self.engineers_exp_queue[i][0] <= self.time and self.engineers_exp_queue[i][3]:
-                    print(f"{self.time}min -> Cliente {self.engineers_exp_queue[i][2]} fue atendido por tecnico especialista. {self.sellers, self.engineers, self.engineers_exp + 1}")
+                    print(f"{ daytime(self.time) } -> Cliente {self.engineers_exp_queue[i][2]} fue atendido por tecnico especialista.")
                     self.engineers_exp_queue.remove(self.engineers_exp_queue[i])
                     self.engineers_exp += 1
                     i -= 1
