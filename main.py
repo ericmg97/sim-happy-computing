@@ -112,8 +112,14 @@ class HC_Simulation():
 
                     # el cliente necesita reparacion de equipos
                     if self.sellers_queue[i][1] == 1 or self.sellers_queue[i][1] == 2:
+                        
                         if self.engineers == 0 and self.engineers_exp > 0:
-                            self.engineers_exp_queue.append(actual)
+                            for client in self.clients_queue:
+                                if client[1] == 3:
+                                    self.engineers_queue.append(actual)
+                                    break
+                            else:
+                                self.engineers_exp_queue.append(actual)
                         else:
                             self.engineers_queue.append(actual)
 
