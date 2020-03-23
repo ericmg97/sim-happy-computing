@@ -1,21 +1,9 @@
-import scipy.stats as stats
-import numpy as np
-from random import random
-from math import log
-
-def next_exp(lmbda):
-    U = random()
-    lmbda = 1/lmbda
-    return -log(1.0 - U)/lmbda
-
-def daytime(minutes):
-        time = divmod(minutes, 60)
-        return "%02d:%02d"%((time[0] + 8, time[1]))
+from tools import inverse_method, exponential, normal, daytime
 
 class HC_Simulation():
 
     def __init__(self, sellers:int, engineers:int, engineers_exp:int):
-        self.serv_clients = stats.rv_discrete( values=([1, 2, 3, 4], [0.45, 0.25, 0.1, 0.2]))
+        self.serv_clients = [(1, 0.45), (2, 0.25), (3, 0.1), (4, 0.2)]
         self.clients_queue = []
 
         self.sellers = int(sellers)
@@ -47,8 +35,8 @@ class HC_Simulation():
     
     def start(self, total_time):
         # Cliente -----------> (Tiempo de llegada, Tipo de servicio, No. Cliente, En Espera)
-        next_arrival = next_exp(20)
-        self.clients_queue.append( (next_arrival, self.serv_clients.rvs(), 1, False))
+        next_arrival = exponential(1/20)
+        self.clients_queue.append( (next_arrival, inverse_method(self.serv_clients), 1, False))
 
         print()
 
@@ -61,9 +49,9 @@ class HC_Simulation():
                 self.report[0] += 1
 
                 # Tiempo para la llegada del sigiente cliente
-                next_arrival = self.time + next_exp(20)
+                next_arrival = self.time + exponential(1/20)
                     
-                self.clients_queue.append((next_arrival, self.serv_clients.rvs(), self.clients_queue[-1][2] + 1, False))
+                self.clients_queue.append((next_arrival, inverse_method(self.serv_clients), self.clients_queue[-1][2] + 1, False))
                 self.sellers_queue.append(self.clients_queue.pop(0))
 
             self._sellers_work()
@@ -90,7 +78,7 @@ class HC_Simulation():
                 self.sellers -= 1
 
                 # normal(5,2) -> tiempo que demora un vendedor en atender a un cliente
-                time_to_finish = self.time + np.random.normal(5, 2)
+                time_to_finish = self.time + normal(5, 2)
 
                 actual = (time_to_finish, self.sellers_queue[i][1], self.sellers_queue[i][2], True)
 
@@ -148,7 +136,7 @@ class HC_Simulation():
                 print(f"{ daytime(self.time) } -> Cliente {self.engineers_queue[i][2]} siendo atendido por tecnico. ")
 
                 # exp(20) -> tiempo que demora un especialista en atender a un cliente
-                time_to_finish = actual[0] + next_exp(20)
+                time_to_finish = actual[0] + exponential(1/20)
                 self.engineers_queue[i] = (time_to_finish, actual[1], actual[2], True)
                 
                 if actual[1] == 1: # realizando servicio de reparacion con garantia
@@ -183,7 +171,7 @@ class HC_Simulation():
                 if actual[1] == 1:
 
                     # exp(20) -> tiempo que demora un especialista en atender a un cliente
-                    time_to_finish = actual[0] + next_exp(20)
+                    time_to_finish = actual[0] + exponential(1/20)
                     self.engineers_exp_queue[i] = (time_to_finish, actual[1], actual[2], True)
 
                     print(f"\t Cliente {self.engineers_exp_queue[i][2]} reparacion con garantia por tecnico especialista.")
@@ -191,7 +179,7 @@ class HC_Simulation():
 
                 elif actual[1] == 2: # realizando servicio de reparacion sin garantia
                     # exp(20) -> tiempo que demora un especialista en atender a un cliente
-                    time_to_finish = actual[0] + next_exp(20)
+                    time_to_finish = actual[0] + exponential(1/20)
 
                     self.engineers_exp_queue[i] = (time_to_finish, actual[1], actual[2], True)
                     print(f"\t Cliente {self.engineers_exp_queue[i][2]} reparacion sin garantia por tecnico especialista.")
@@ -200,7 +188,7 @@ class HC_Simulation():
                     self.gain += 350  
                 elif actual[1] == 3: # realizando servicio de cambio de equipos
                     # exp(15) -> tiempo que demora un especialista especializado en realizar cambio de equipos
-                    time_to_finish = actual[0] + next_exp(15)
+                    time_to_finish = actual[0] + exponential(1/15)
                     self.engineers_exp_queue[i] = (time_to_finish, actual[1], actual[2], True)
 
                     print(f"\t Cliente {self.engineers_exp_queue[i][2]} cambio de equipos.")
@@ -225,6 +213,4 @@ if __name__ == "__main__":
 
     sim = HC_Simulation(v, t, te)
 
-    sim.start(1000)
-    sim.reset(20,20)
     sim.start(1000)
