@@ -21,7 +21,7 @@ class HC_Simulation():
         self.report = [0]*5
         self.gain = 0
 
-        self.time = 0
+        self.time = -1
 
     def reset(self, sellers = None, engineers = None, engineers_exp = None):
         if sellers is None:
@@ -33,25 +33,31 @@ class HC_Simulation():
 
         self.__init__(sellers, engineers, engineers_exp)
     
-    def start(self, total_time):
+    def start(self):
         # Cliente -----------> (Tiempo de llegada, Tipo de servicio, No. Cliente, En Espera)
         next_arrival = exponential(1/20)
         self.clients_queue.append( (next_arrival, inverse_method(self.serv_clients), 1, False))
 
         print()
 
-        for time in range(total_time):
-            self.time = time
+        while True:
+            self.time += 1
 
-            # 480min = 8horas Jornada Laboral
-            if self.clients_queue[-1][0] <= self.time and self.time < 480:
+            if len(self.clients_queue) == 0:
+                if self.sellers == self._sellers and self.engineers == self._engineers and self.engineers_exp == self._engineers_exp:
+                    break
+            
+            elif len(self.clients_queue) != 0 and self.clients_queue[-1][0] <= self.time:
                 print(f"{ daytime(self.time) } -> Cliente {self.clients_queue[-1][2]} llega al taller.")
                 self.report[0] += 1
 
-                # Tiempo para la llegada del sigiente cliente
+                # Tiempo para la llegada del sigiente cliente ~Poi(20)
                 next_arrival = self.time + exponential(1/20)
-                    
-                self.clients_queue.append((next_arrival, inverse_method(self.serv_clients), self.clients_queue[-1][2] + 1, False))
+
+                if next_arrival <= 480: # 480min = 8horas Jornada Laboral
+                    client_service = inverse_method(self.serv_clients)
+                    self.clients_queue.append((next_arrival, client_service, self.clients_queue[-1][2] + 1, False))
+                
                 self.sellers_queue.append(self.clients_queue.pop(0))
 
             self._sellers_work()
@@ -213,4 +219,4 @@ if __name__ == "__main__":
 
     sim = HC_Simulation(v, t, te)
 
-    sim.start(1000)
+    sim.start()
