@@ -1,0 +1,166 @@
+08:43 -> Cliente 1 llega al taller.
+08:43 -> Cliente 1 siendo atendido por vendedor. 
+08:50 -> Cliente 1 fue atendido por vendedor.
+08:50 -> Cliente 1 siendo atendido por tecnico. 
+	 Cliente 1 reparacion sin garantia por tecnico.
+08:56 -> Cliente 1 fue atendido por tecnico.
+09:18 -> Cliente 2 llega al taller.
+09:18 -> Cliente 2 siendo atendido por vendedor. 
+	 Cliente 2 comprando equipo.
+09:25 -> Cliente 2 fue atendido por vendedor.
+10:01 -> Cliente 3 llega al taller.
+10:01 -> Cliente 3 siendo atendido por vendedor. 
+10:11 -> Cliente 3 fue atendido por vendedor.
+10:11 -> Cliente 3 siendo atendido por tecnico. 
+	 Cliente 3 reparacion con garantia por tecnico.
+10:14 -> Cliente 4 llega al taller.
+10:14 -> Cliente 4 siendo atendido por vendedor. 
+10:21 -> Cliente 4 fue atendido por vendedor.
+10:21 -> Cliente 4 siendo atendido por tecnico. 
+	 Cliente 4 reparacion sin garantia por tecnico.
+10:42 -> Cliente 5 llega al taller.
+10:42 -> Cliente 5 siendo atendido por vendedor. 
+10:45 -> Cliente 6 llega al taller.
+10:45 -> Cliente 6 siendo atendido por vendedor. 
+10:49 -> Cliente 5 fue atendido por vendedor.
+10:49 -> Cliente 5 siendo atendido por tecnico. 
+	 Cliente 5 reparacion con garantia por tecnico.
+10:51 -> Cliente 6 fue atendido por vendedor.
+10:51 -> Cliente 3 fue atendido por tecnico.
+10:51 -> Cliente 4 fue atendido por tecnico.
+10:51 -> Cliente 6 siendo atendido por tecnico especialista. 
+	 Cliente 6 reparacion con garantia por tecnico especialista.
+10:52 -> Cliente 7 llega al taller.
+10:52 -> Cliente 7 siendo atendido por vendedor. 
+11:00 -> Cliente 7 fue atendido por vendedor.
+11:00 -> Cliente 7 siendo atendido por tecnico. 
+	 Cliente 7 reparacion sin garantia por tecnico.
+11:02 -> Cliente 7 fue atendido por tecnico.
+11:05 -> Cliente 8 llega al taller.
+11:05 -> Cliente 8 siendo atendido por vendedor. 
+11:08 -> Cliente 6 fue atendido por tecnico especialista.
+11:14 -> Cliente 8 fue atendido por vendedor.
+11:14 -> Cliente 8 siendo atendido por tecnico. 
+	 Cliente 8 reparacion con garantia por tecnico.
+11:16 -> Cliente 9 llega al taller.
+11:16 -> Cliente 9 siendo atendido por vendedor. 
+11:16 -> Cliente 8 fue atendido por tecnico.
+11:23 -> Cliente 9 fue atendido por vendedor.
+11:23 -> Cliente 9 siendo atendido por tecnico. 
+	 Cliente 9 reparacion sin garantia por tecnico.
+11:24 -> Cliente 9 fue atendido por tecnico.
+11:56 -> Cliente 10 llega al taller.
+11:56 -> Cliente 10 siendo atendido por vendedor. 
+	 Cliente 10 comprando equipo.
+11:59 -> Cliente 5 fue atendido por tecnico.
+12:05 -> Cliente 11 llega al taller.
+12:05 -> Cliente 10 fue atendido por vendedor.
+12:05 -> Cliente 11 siendo atendido por vendedor. 
+12:10 -> Cliente 12 llega al taller.
+12:10 -> Cliente 12 siendo atendido por vendedor. 
+12:12 -> Cliente 11 fue atendido por vendedor.
+12:12 -> Cliente 11 siendo atendido por tecnico. 
+	 Cliente 11 reparacion con garantia por tecnico.
+12:17 -> Cliente 12 fue atendido por vendedor.
+12:17 -> Cliente 12 siendo atendido por tecnico. 
+	 Cliente 12 reparacion con garantia por tecnico.
+12:22 -> Cliente 11 fue atendido por tecnico.
+12:50 -> Cliente 12 fue atendido por tecnico.
+12:55 -> Cliente 13 llega al taller.
+12:55 -> Cliente 13 siendo atendido por vendedor. 
+	 Cliente 13 comprando equipo.
+12:59 -> Cliente 14 llega al taller.
+12:59 -> Cliente 14 siendo atendido por vendedor. 
+13:02 -> Cliente 13 fue atendido por vendedor.
+13:03 -> Cliente 15 llega al taller.
+13:03 -> Cliente 15 siendo atendido por vendedor. 
+13:05 -> Cliente 14 fue atendido por vendedor.
+13:05 -> Cliente 14 siendo atendido por tecnico. 
+	 Cliente 14 reparacion con garantia por tecnico.
+13:06 -> Cliente 16 llega al taller.
+13:06 -> Cliente 16 siendo atendido por vendedor. 
+13:12 -> Cliente 15 fue atendido por vendedor.
+13:12 -> Cliente 15 siendo atendido por tecnico. 
+	 Cliente 15 reparacion con garantia por tecnico.
+13:13 -> Cliente 16 fue atendido por vendedor.
+13:13 -> Cliente 16 siendo atendido por tecnico. 
+	 Cliente 16 reparacion con garantia por tecnico.
+13:17 -> Cliente 17 llega al taller.
+13:17 -> Cliente 17 siendo atendido por vendedor. 
+13:23 -> Cliente 16 fue atendido por tecnico.
+13:25 -> Cliente 17 fue atendido por vendedor.
+13:25 -> Cliente 17 siendo atendido por tecnico. 
+	 Cliente 17 reparacion con garantia por tecnico.
+13:27 -> Cliente 18 llega al taller.
+13:27 -> Cliente 18 siendo atendido por vendedor. 
+13:31 -> Cliente 15 fue atendido por tecnico.
+13:35 -> Cliente 18 fue atendido por vendedor.
+13:35 -> Cliente 18 siendo atendido por tecnico. 
+	 Cliente 18 reparacion con garantia por tecnico.
+13:38 -> Cliente 17 fue atendido por tecnico.
+13:42 -> Cliente 18 fue atendido por tecnico.
+13:58 -> Cliente 14 fue atendido por tecnico.
+14:13 -> Cliente 19 llega al taller.
+14:13 -> Cliente 19 siendo atendido por vendedor. 
+14:19 -> Cliente 19 fue atendido por vendedor.
+14:19 -> Cliente 19 siendo atendido por tecnico. 
+	 Cliente 19 reparacion con garantia por tecnico.
+14:32 -> Cliente 20 llega al taller.
+14:32 -> Cliente 20 siendo atendido por vendedor. 
+14:39 -> Cliente 20 fue atendido por vendedor.
+14:39 -> Cliente 20 siendo atendido por tecnico. 
+	 Cliente 20 reparacion sin garantia por tecnico.
+14:44 -> Cliente 19 fue atendido por tecnico.
+15:06 -> Cliente 21 llega al taller.
+15:06 -> Cliente 21 siendo atendido por vendedor. 
+	 Cliente 21 comprando equipo.
+15:12 -> Cliente 22 llega al taller.
+15:12 -> Cliente 22 siendo atendido por vendedor. 
+15:15 -> Cliente 21 fue atendido por vendedor.
+15:19 -> Cliente 20 fue atendido por tecnico.
+15:21 -> Cliente 23 llega al taller.
+15:21 -> Cliente 23 siendo atendido por vendedor. 
+15:22 -> Cliente 22 fue atendido por vendedor.
+15:22 -> Cliente 22 siendo atendido por tecnico. 
+	 Cliente 22 reparacion sin garantia por tecnico.
+15:23 -> Cliente 24 llega al taller.
+15:23 -> Cliente 24 siendo atendido por vendedor. 
+15:24 -> Cliente 25 llega al taller.
+15:27 -> Cliente 26 llega al taller.
+15:29 -> Cliente 22 fue atendido por tecnico.
+15:30 -> Cliente 27 llega al taller.
+15:31 -> Cliente 23 fue atendido por vendedor.
+15:31 -> Cliente 25 siendo atendido por vendedor. 
+	 Cliente 25 comprando equipo.
+15:31 -> Cliente 23 siendo atendido por tecnico. 
+	 Cliente 23 reparacion con garantia por tecnico.
+15:32 -> Cliente 24 fue atendido por vendedor.
+15:32 -> Cliente 26 siendo atendido por vendedor. 
+15:32 -> Cliente 24 siendo atendido por tecnico especialista. 
+	 Cliente 24 cambio de equipos.
+15:37 -> Cliente 25 fue atendido por vendedor.
+15:37 -> Cliente 27 siendo atendido por vendedor. 
+15:37 -> Cliente 23 fue atendido por tecnico.
+15:39 -> Cliente 26 fue atendido por vendedor.
+15:39 -> Cliente 26 siendo atendido por tecnico. 
+	 Cliente 26 reparacion con garantia por tecnico.
+15:43 -> Cliente 27 fue atendido por vendedor.
+15:52 -> Cliente 28 llega al taller.
+15:52 -> Cliente 28 siendo atendido por vendedor. 
+15:56 -> Cliente 24 fue atendido por tecnico especialista.
+15:56 -> Cliente 27 siendo atendido por tecnico especialista. 
+	 Cliente 27 cambio de equipos.
+16:01 -> Cliente 28 fue atendido por vendedor.
+16:01 -> Cliente 28 siendo atendido por tecnico. 
+	 Cliente 28 reparacion con garantia por tecnico.
+16:08 -> Cliente 27 fue atendido por tecnico especialista.
+16:14 -> Cliente 28 fue atendido por tecnico.
+16:15 -> Cliente 26 fue atendido por tecnico.
+
+Se atendieron un total de 28 clientes:
+    15 reparaciones con garantia
+    6 reparaciones sin garantia
+    2 cambio de equipos
+    5 venta de equipos 
+
+La ganancia fue de: 6850
