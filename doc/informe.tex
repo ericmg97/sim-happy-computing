@@ -1,0 +1,304 @@
+% !TeX spellcheck = en_US
+%===================================================================================
+
+%===================================================================================
+% PREÁMBULO
+%-----------------------------------------------------------------------------------
+\documentclass[a4paper,10pt,twocolumn]{article}
+
+%===================================================================================
+% Paquetes
+%-----------------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{informe}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{algorithmic}
+\usepackage[pdftex]{hyperref}
+%-----------------------------------------------------------------------------------
+% Configuración
+%-----------------------------------------------------------------------------------
+\hypersetup{colorlinks,%
+	    citecolor=black,%
+	    filecolor=black,%
+	    linkcolor=black,%
+	    urlcolor=blue}
+
+%===================================================================================
+
+
+
+%===================================================================================
+% Presentacion
+%-----------------------------------------------------------------------------------
+% Título
+%-----------------------------------------------------------------------------------
+\title{Simulación basada en Eventos Discretos}
+
+%-----------------------------------------------------------------------------------
+% Autores
+%-----------------------------------------------------------------------------------
+\author{\\
+\name Eric Martín García \email \href{mailto:e.martin@estudiantes.matcom.uh.cu}{e.martin@estudiantes.matcom.uh.cu}
+	\\ \addr Grupo C411}
+
+%-----------------------------------------------------------------------------------
+% Tutores
+%-----------------------------------------------------------------------------------
+\tutors{\\}
+
+%-----------------------------------------------------------------------------------
+% Headings
+%-----------------------------------------------------------------------------------
+%\jcematcomheading{\the\year}{1-\pageref{end}}{Carlos Rafael}
+
+%-----------------------------------------------------------------------------------
+%\ShortHeadings{Simulacio\'n basada en Eventos Discretos}{Carlos Rafael}
+%===================================================================================
+
+
+
+%===================================================================================
+% DOCUMENTO
+%-----------------------------------------------------------------------------------
+\begin{document}
+
+%-----------------------------------------------------------------------------------
+% NO BORRAR ESTA LINEA!
+%-----------------------------------------------------------------------------------
+\twocolumn[
+%-----------------------------------------------------------------------------------
+
+\maketitle
+
+%===================================================================================
+% Resumen y Abstract
+%-----------------------------------------------------------------------------------
+\selectlanguage{spanish} % Para producir el documento en Español
+
+%-----------------------------------------------------------------------------------
+% Resumen en Español
+%-----------------------------------------------------------------------------------
+%\begin{abstract}
+
+%	El Resumen en Español debe constar de $100$ a $200$ palabras y presentar de forma
+%	clara y concisa el contenido fundamental del artículo.
+
+%\end{abstract}
+
+%-----------------------------------------------------------------------------------
+% English Abstract
+%-----------------------------------------------------------------------------------
+\vspace{0.5cm}
+
+%\begin{enabstract}
+
+%  The English Abstract must have have $100$ to $200$ words, and present in a clear
+%  and concise form the essentials of the article content.
+
+%\end{enabstract}
+
+%-----------------------------------------------------------------------------------
+% Palabras clave
+%-----------------------------------------------------------------------------------
+%\begin{keywords}
+%	Separadas,
+%	Por,
+%	Comas.
+%\end{keywords}
+
+%-----------------------------------------------------------------------------------
+% Temas
+%-----------------------------------------------------------------------------------
+%\begin{topics}
+%	Tema, Subtema.
+%\end{topics}
+
+
+%-----------------------------------------------------------------------------------
+% NO BORRAR ESTAS LINEAS!
+%-----------------------------------------------------------------------------------
+\vspace{0.8cm}
+]
+%-----------------------------------------------------------------------------------
+
+
+%===================================================================================
+
+%===================================================================================
+% Introducción
+%-----------------------------------------------------------------------------------
+\section{Problema Asignado}\label{sec:intro}
+%-----------------------------------------------------------------------------------
+Happy Computing es un taller de reparaciones electrónicas se realizan las
+siguientes actividades (el precio de cada servicio se muestra entre paréntesis): 
+\begin{enumerate}
+	\item Reparación por garantía (Gratis).
+	\item Reparación fuera de garantía (\$350).
+	\item Cambio de equipo (\$500).
+	\item  Venta de equipos reparados (\$750).
+\end{enumerate}
+
+Se conoce además que el taller cuenta con 3 tipos de empleados: Vendedor, Técnico y Técnico Especializado. \\
+Para su funcionamiento, cuando un cliente llega al taller, es atendido por un vendedor y en caso de que el servicio que requiera sea una Reparación (sea de tipo 1 o 2) el cliente debe ser atendido por un técnico (especializado o no). \\
+Además en caso de que el cliente quiera un cambio de equipo este debe ser atendido por un técnico especializado. Si todos los empleados que pueden atender al cliente están ocupados, entonces se establece una cola para sus servicios. Un
+técnico especializado sólo realizará Reparaciones si no hay ningún cliente que desee un cambio de equipo en la cola.
+Se conoce que los clientes arriban al local con un intervalo de tiempo que distribuye poisson con $\lambda = 20$ minutos y que el tipo de servicios que requieren pueden ser descrito mediante la tabla de probabilidades:
+
+\begin{table} [htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\hline
+			Tipo de Servicio & Probabilidad \\
+			\hline \hline
+			1 & 0.45 \\ \hline
+			2 & 0.25 \\ \hline
+			3 & 0.10 \\ \hline
+			4 & 0.20 \\ \hline
+			
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Además se conoce que un técnico tarda un tiempo que distribuye exponecial con $\lambda = 20$ minutos, en realizar una Reparación Cualquiera. Un técnico especializdo tarda un tiempo que distribuye exponencial con $\lambda = 15$ minutos para
+realizar un cambio de equipos y la vendedora puede atender cualquier servicio en un tiempo que distribuye normal N(5 min, 2min). \\
+El dueño del lugar desea realizar una simulación de la ganancia que tendría en una jornada laboral si tuviera 2 vendedores, 3 técnicos y 1 técnico especializado.
+
+%===================================================================================
+
+%===================================================================================
+% Desarrollo
+%-----------------------------------------------------------------------------------
+
+\section{Principales Ideas}\label{sec:dev}
+%-----------------------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------------------
+	\subsection{Variables de la Simulaci\'on}\label{sub:results}
+%-----------------------------------------------------------------------------------
+	
+	Los clientes se identifican por una tupla compuesta por la siguiente informacion: \\ 
+	Tiempo de LLegada, Tipo de servicio, No. de Cliente, En Espera
+
+	\begin{description}
+		\item \textbf{Variable de Tiempo} ($time$): Describe el tiempo transcurrido hasta el momento en la simulación
+		\item \textbf{Variable Contadora} ($report$): Total de clientes atendidos, cantidad de reparaciones con garantía, cantidad de reparaciones sin garantía, cantidad de cambio de equipos, cantidad de equipos vendidos.
+		\item \textbf{Variables de Estado}:
+		\begin{description}
+			\item $clients\_queue$: Contiene la cola de los clientes que han llegado y no han sido atendidos.
+			\item $sellers\_queue$: Contiene el estado de los clientes que estan siendo atendidos por los vendedores.
+			\item $engineers\_queue$: Contiene el estado de los clientes que estan siendo atendidos por los técnicos.
+			\item $engineers\_exp\_queue$: Contiene el estado de los clientes que estan siendo atendidos por los técnicos especializados.
+			
+		\end{description}
+		\item \textbf{Variables de Salida}:
+		\begin{description}
+			\item $gain$: Ganancía obtenida por el dueño del negocio al final de la jornada laboral.
+		\end{description}
+	\end{description}
+%-----------------------------------------------------------------------------------
+	\subsection{Variables Aleatorias presentes en la Simulaci\'on}\label{sub:lists}
+%-----------------------------------------------------------------------------------
+		
+		El comportamiento del tiempo de llegada y de atencion a los clientes viene dado por un conjunto de diversas variables aleatorias.
+		
+		\begin{enumerate}
+			\item Tiempo de arribo del cliente al taller: $T_{0} \sim  Poi(20)$
+			\item Tiempo de atención de un vendedor: $T_{v} \sim N(5,2)$
+			\item Tiempo de atención de un técnico cualquiera en una reparación (1, 2): $T_{r} \sim Exp(20)$
+			\item Tiempo de atencion de un técnico especializado en cambiar equipos: $T_{c} \sim Exp(15)$
+		\end{enumerate}
+
+		Para generar una variable aleatoria exponencial para poder describir el comportamiento de los diversos sucesos se emplea el m\'etodo de la inversa:
+		
+		\begin{algorithmic}[1]
+			\STATE Generar un n\'umero aleatorio $U$
+			\STATE Hacer $X = - \dfrac{1}{\lambda} log(U)$ 
+			\STATE Retornar $X$
+		\end{algorithmic}
+
+		En el caso de la variable normal primero se genera $Y \sim N(0,1)$ y luego se aplica: $X = \mu + Y\sigma$. Finalmente para determinar si un avi\'on sufrir\'a una ruptura o no se emplea:
+		
+		\begin{align*}
+			p\left(X = x_{j}\right) = p\left(\sum_{i=0}^{j-1} p_{i} \leq U < \sum_{i=0}^{j}p_{i} \right) = p_{j}
+		\end{align*}
+
+		Donde $U$ distribuye uniforme de 0 a 1. 
+
+
+%-----------------------------------------------------------------------------------
+
+\section{Modelo de Simulación de Eventos Discretos Desarrollado para resolver el problema} \label{sub:listings}
+%-----------------------------------------------------------------------------------
+En este problema se pueden ver representados varios modelos de simulacion basada en eventos discretos. Están presentes clientes que son atendidos:
+\begin{enumerate}[label=\roman*)]
+	\item Vendedor en caso de querer comprar equipos (Un servidor)
+	\item Vendedor-Tecnico en caso de querer realizar reparaciones (Dos Servidores en Serie)
+	\item Tecnico y Tecnico Especializado si no hay clientes que requieran cambio de equipos en cola (Dos Servidores en Paralelo)
+\end{enumerate}
+%-----------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------
+\section{Consideraciones}
+%-----------------------------------------------------------------------------------
+
+%===================================================================================
+\begin{enumerate}
+	\item La unidad de tiempo utilizada es: minutos.
+	\item La jornada laboral es de 8 horas. (480 minutos)
+	\item Los tiempos de reporte fueron llevados a un horario entre 8:00 - 16:00 para hacer más realista la simulación.
+	\item Todos los clientes que llegaron antes de las 16:00 serán atendidos, aunque esto suponga un alargue de unos minutos a la jornada laboral.
+\end{enumerate}
+
+Los resultados obtenidos luego de una corrida de ejemplo de la simulación son los siguientes:
+
+\begin{center}
+	\begin{tabular}[t]{|c|c|c|}
+		\hline
+		Tipo de Servicio & Cantidad & Ganancia\\
+		\hline \hline
+		Reparaciones con Garantía & 15 & 0   \\ \hline
+		Reparaciones sin Garantía & 6 & 2100 \\ \hline
+		Cambio de Equipos & 2 & 1000         \\ \hline
+		Venta de Equipos  & 5 & 3750         \\ \hline
+		\hline
+		\textbf{TOTAL} & 28 & 6850\\
+		\hline
+	\end{tabular}
+\end{center}
+
+%===================================================================================
+% Conclusiones
+%-----------------------------------------------------------------------------------
+\section{Repositorio}\label{sec:conc}
+
+%===================================================================================
+\href{https://github.com/ericmg97/sim-happy-computing}{https://github.com/ericmg97/sim-happy-computing}
+%===================================================================================
+% Bibliografía
+%-----------------------------------------------------------------------------------
+\begin{thebibliography}{99}
+%-----------------------------------------------------------------------------------
+	\bibitem{knuth} Donald E. Knuth. \emph{The Art of Computer Programming}.
+		Volume 1: Fundamental Algorithms (3rd~edition), 1997.
+		Addison-Wesley Professional.
+
+	\bibitem{goedel} Kurt Göedel. \emph{Über formal unentscheidbare Sätze der
+		Principia Mathematica und verwandter Systeme, I}.
+		Monatshefte für Mathematik und Physik 38.
+
+%-----------------------------------------------------------------------------------
+\end{thebibliography}
+
+%-----------------------------------------------------------------------------------
+
+\label{end}
+
+\end{document}
+
+%===================================================================================
