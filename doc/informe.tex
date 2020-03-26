@@ -133,8 +133,7 @@
 %-----------------------------------------------------------------------------------
 \section{Problema Asignado}\label{sec:intro}
 %-----------------------------------------------------------------------------------
-Happy Computing es un taller de reparaciones electrónicas se realizan las
-siguientes actividades (el precio de cada servicio se muestra entre paréntesis): 
+Happy Computing es un taller de reparaciones electrónicas se realizan las siguientes actividades (el precio de cada servicio se muestra entre paréntesis): 
 \begin{enumerate}
 	\item Reparación por garantía (Gratis).
 	\item Reparación fuera de garantía (\$350).
@@ -176,13 +175,16 @@ El dueño del lugar desea realizar una simulación de la ganancia que tendría e
 \section{Principales Ideas}\label{sec:dev}
 %-----------------------------------------------------------------------------------
 
+Para resolver este problema, se separó el flujo de llegada de los clientes y el trabajo de cada uno de los dependientes, creando distintas colas por las que el cliente iba pasando. En un principio el cliente llega al taller y automáticamente pasa a la cola de los vendedores, ya que el primer trabajador que atiende a los clientes siempre es un vendedor. Este vendedor hace función de organizador y envia al cliente a la cola correspondiente dependiendo el servicio que este desee. De esta forma, cada tipo de trabajador (vendedor, técnico y técnico especializado) sabe exactamente cuáles son los clientes que debe atender. \\
+Como el tiempo de simulación es pequeño se realizó esta de minuto en minuto para darle un aspecto mas realista y poder describir detalladamente los eventos en el tiempo exacto en el que estos ocurren, brindando la posibidad de simular el proceso en tiempo real (o a una escala menor, por ejemplo: 1$min$ = 1$seg$) //
+Se añade la posibilidad de controlar la cantidad de vendedores, técnicos y técnicos especializados para realizar la simulación.
 
 
 %-----------------------------------------------------------------------------------
 	\subsection{Variables de la Simulaci\'on}\label{sub:results}
 %-----------------------------------------------------------------------------------
 	
-	Los clientes se identifican por una tupla compuesta por la siguiente informacion: \\ 
+	Los clientes se identifican por una tupla compuesta por la siguiente información: \\ 
 	Tiempo de LLegada, Tipo de servicio, No. de Cliente, En Espera
 
 	\begin{description}
@@ -198,14 +200,14 @@ El dueño del lugar desea realizar una simulación de la ganancia que tendría e
 		\end{description}
 		\item \textbf{Variables de Salida}:
 		\begin{description}
-			\item $gain$: Ganancía obtenida por el dueño del negocio al final de la jornada laboral.
+			\item $gain$: Ganancia obtenida por el dueño del negocio al final de la jornada laboral.
 		\end{description}
 	\end{description}
 %-----------------------------------------------------------------------------------
-	\subsection{Variables Aleatorias presentes en la Simulaci\'on}\label{sub:lists}
+	\subsection{Variables Aleatorias presentes en la Simulación}\label{sub:lists}
 %-----------------------------------------------------------------------------------
 		
-		El comportamiento del tiempo de llegada y de atencion a los clientes viene dado por un conjunto de diversas variables aleatorias.
+		El comportamiento del tiempo de llegada y de atención a los clientes viene dado por un conjunto de diversas variables aleatorias.
 		
 		\begin{enumerate}
 			\item Tiempo de arribo del cliente al taller: $T_{0} \sim  Poi(20)$
@@ -255,7 +257,7 @@ En este problema se pueden ver representados varios modelos de simulacion basada
 	\item Todos los clientes que llegaron antes de las 16:00 serán atendidos, aunque esto suponga un alargue de unos minutos a la jornada laboral.
 \end{enumerate}
 
-Los resultados obtenidos luego de una corrida de ejemplo de la simulación son los siguientes:
+Los resultados obtenidos luego de una simulacion de ejemplo con 2 vendedores, 3 técnicos y 1 técnico especializado son los siguientes:
 
 \begin{center}
 	\begin{tabular}[t]{|c|c|c|}
